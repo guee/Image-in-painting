@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InpaintTestClass</class>
+ <widget class="QMainWindow" name="InpaintTestClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1233</width>
+    <height>706</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>InpaintTest</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="CImageDir" name="widgetDir" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>1</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="CImageDisplay" name="widgetImage" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>3</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actOpen"/>
+   <addaction name="actSave"/>
+   <addaction name="separator"/>
+   <addaction name="actMove"/>
+   <addaction name="actSelRect"/>
+   <addaction name="actSelPath"/>
+   <addaction name="actSelPencil"/>
+   <addaction name="actUndo"/>
+   <addaction name="actRedo"/>
+   <addaction name="separator"/>
+   <addaction name="actInpaint"/>
+   <addaction name="actInpaint2"/>
+   <addaction name="separator"/>
+   <addaction name="actEnlarge"/>
+   <addaction name="actShrink"/>
+   <addaction name="actOriginal"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actInpaint">
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconInpaint.png</normaloff>:/InpaintTest/Resources/iconInpaint.png</iconset>
+   </property>
+   <property name="text">
+    <string>修补</string>
+   </property>
+  </action>
+  <action name="actSelRect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconRect.png</normaloff>
+     <normalon>:/InpaintTest/Resources/iconRectOn.png</normalon>:/InpaintTest/Resources/iconRect.png</iconset>
+   </property>
+   <property name="text">
+    <string>矩形</string>
+   </property>
+  </action>
+  <action name="actSelPencil">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconPencil.png</normaloff>
+     <normalon>:/InpaintTest/Resources/iconPencilOn.png</normalon>:/InpaintTest/Resources/iconPencil.png</iconset>
+   </property>
+   <property name="text">
+    <string>画笔</string>
+   </property>
+  </action>
+  <action name="actEnlarge">
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconEnlarge.png</normaloff>:/InpaintTest/Resources/iconEnlarge.png</iconset>
+   </property>
+   <property name="text">
+    <string>放大</string>
+   </property>
+  </action>
+  <action name="actShrink">
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconShrink.png</normaloff>:/InpaintTest/Resources/iconShrink.png</iconset>
+   </property>
+   <property name="text">
+    <string>缩小</string>
+   </property>
+  </action>
+  <action name="actOriginal">
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconZoom.png</normaloff>:/InpaintTest/Resources/iconZoom.png</iconset>
+   </property>
+   <property name="text">
+    <string>适合</string>
+   </property>
+  </action>
+  <action name="actMove">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconMove.png</normaloff>
+     <normalon>:/InpaintTest/Resources/iconMoveOn.png</normalon>:/InpaintTest/Resources/iconMove.png</iconset>
+   </property>
+   <property name="text">
+    <string>移动</string>
+   </property>
+  </action>
+  <action name="actOpen">
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconOpen.png</normaloff>:/InpaintTest/Resources/iconOpen.png</iconset>
+   </property>
+   <property name="text">
+    <string>打开</string>
+   </property>
+  </action>
+  <action name="actSave">
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconSave.png</normaloff>:/InpaintTest/Resources/iconSave.png</iconset>
+   </property>
+   <property name="text">
+    <string>保存</string>
+   </property>
+  </action>
+  <action name="actSelPath">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconPath.png</normaloff>
+     <normalon>:/InpaintTest/Resources/iconPathOn.png</normalon>:/InpaintTest/Resources/iconPath.png</iconset>
+   </property>
+   <property name="text">
+    <string>路径</string>
+   </property>
+  </action>
+  <action name="actUndo">
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconUndo.png</normaloff>:/InpaintTest/Resources/iconUndo.png</iconset>
+   </property>
+   <property name="text">
+    <string>撤消</string>
+   </property>
+  </action>
+  <action name="actRedo">
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconRedo.png</normaloff>:/InpaintTest/Resources/iconRedo.png</iconset>
+   </property>
+   <property name="text">
+    <string>重做</string>
+   </property>
+  </action>
+  <action name="actInpaint2">
+   <property name="icon">
+    <iconset resource="InpaintTest.qrc">
+     <normaloff>:/InpaintTest/Resources/iconInpaint2.png</normaloff>:/InpaintTest/Resources/iconInpaint2.png</iconset>
+   </property>
+   <property name="text">
+    <string>修补</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>CImageDir</class>
+   <extends>QWidget</extends>
+   <header>cimagedir.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CImageDisplay</class>
+   <extends>QWidget</extends>
+   <header>cimagedisplay.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="InpaintTest.qrc"/>
+ </resources>
+ <connections/>
+</ui>
