@@ -2,17 +2,17 @@
 
 #include <QWidget>
 #include <QtGui>
-#include "ui_InpaintTest.h"
+#include "ui_InpaintGui.h"
 #include "CImageDir.h"
 #include "Inpaint.h"
 
 
-class InpaintTest : public QMainWindow
+class InpaintGui : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	InpaintTest(QWidget *parent = Q_NULLPTR);
+	InpaintGui(QWidget *parent = Q_NULLPTR);
 
 private:
 	Ui::InpaintTestClass ui;

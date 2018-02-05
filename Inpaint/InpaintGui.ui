@@ -76,7 +76,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actInpaint">
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconInpaint.png</normaloff>:/InpaintTest/Resources/iconInpaint.png</iconset>
    </property>
    <property name="text">
@@ -88,7 +88,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconRect.png</normaloff>
      <normalon>:/InpaintTest/Resources/iconRectOn.png</normalon>:/InpaintTest/Resources/iconRect.png</iconset>
    </property>
@@ -104,7 +104,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconPencil.png</normaloff>
      <normalon>:/InpaintTest/Resources/iconPencilOn.png</normalon>:/InpaintTest/Resources/iconPencil.png</iconset>
    </property>
@@ -114,7 +114,7 @@
   </action>
   <action name="actEnlarge">
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconEnlarge.png</normaloff>:/InpaintTest/Resources/iconEnlarge.png</iconset>
    </property>
    <property name="text">
@@ -123,7 +123,7 @@
   </action>
   <action name="actShrink">
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconShrink.png</normaloff>:/InpaintTest/Resources/iconShrink.png</iconset>
    </property>
    <property name="text">
@@ -132,7 +132,7 @@
   </action>
   <action name="actOriginal">
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconZoom.png</normaloff>:/InpaintTest/Resources/iconZoom.png</iconset>
    </property>
    <property name="text">
@@ -144,7 +144,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconMove.png</normaloff>
      <normalon>:/InpaintTest/Resources/iconMoveOn.png</normalon>:/InpaintTest/Resources/iconMove.png</iconset>
    </property>
@@ -154,7 +154,7 @@
   </action>
   <action name="actOpen">
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconOpen.png</normaloff>:/InpaintTest/Resources/iconOpen.png</iconset>
    </property>
    <property name="text">
@@ -163,7 +163,7 @@
   </action>
   <action name="actSave">
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconSave.png</normaloff>:/InpaintTest/Resources/iconSave.png</iconset>
    </property>
    <property name="text">
@@ -175,7 +175,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconPath.png</normaloff>
      <normalon>:/InpaintTest/Resources/iconPathOn.png</normalon>:/InpaintTest/Resources/iconPath.png</iconset>
    </property>
@@ -185,7 +185,7 @@
   </action>
   <action name="actUndo">
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconUndo.png</normaloff>:/InpaintTest/Resources/iconUndo.png</iconset>
    </property>
    <property name="text">
@@ -194,7 +194,7 @@
   </action>
   <action name="actRedo">
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconRedo.png</normaloff>:/InpaintTest/Resources/iconRedo.png</iconset>
    </property>
    <property name="text">
@@ -203,7 +203,7 @@
   </action>
   <action name="actInpaint2">
    <property name="icon">
-    <iconset resource="InpaintTest.qrc">
+    <iconset resource="InpaintGui.qrc">
      <normaloff>:/InpaintTest/Resources/iconInpaint2.png</normaloff>:/InpaintTest/Resources/iconInpaint2.png</iconset>
    </property>
    <property name="text">
@@ -227,7 +227,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="InpaintTest.qrc"/>
+  <include location="InpaintGui.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -1,6 +1,6 @@
-#include "InpaintTest.h"
+#include "InpaintGui.h"
 
-InpaintTest::InpaintTest(QWidget *parent)
+InpaintGui::InpaintGui(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
@@ -21,21 +21,21 @@ InpaintTest::InpaintTest(QWidget *parent)
 	ui.widgetDir->setDir( szImgDir, QSize( 100, 100 ) );
 }
 
-void InpaintTest::on_dirChanged( CImageDir* pImgDir, const QString& szDir )
+void InpaintGui::on_dirChanged( CImageDir* pImgDir, const QString& szDir )
 {
 }
 
-void InpaintTest::on_actInpaint_triggered( bool checked )
+void InpaintGui::on_actInpaint_triggered( bool checked )
 {
 	ui.widgetImage->startInpaint( false );
 }
 
-void InpaintTest::on_actInpaint2_triggered( bool checked )
+void InpaintGui::on_actInpaint2_triggered( bool checked )
 {
 	ui.widgetImage->startInpaint( true );
 }
 
-void InpaintTest::on_actOpen_triggered( bool checked )
+void InpaintGui::on_actOpen_triggered( bool checked )
 {
 	QString	szDir = QFileDialog::getExistingDirectory( this, "Dir", ui.widgetDir->dir() );
 	if ( !szDir.isEmpty() )
@@ -44,7 +44,7 @@ void InpaintTest::on_actOpen_triggered( bool checked )
 	}
 }
 
-void InpaintTest::on_actSave_triggered( bool checked )
+void InpaintGui::on_actSave_triggered( bool checked )
 {
 	if ( ui.widgetImage->image() == nullptr || ui.widgetImage->image()->isNull() ) return;
 	QString	szFile	= QFileDialog::getSaveFileName( this, "Save", ui.widgetDir->dir(), "Image (*.png *.jpg *.bmp)" );
@@ -55,19 +55,19 @@ void InpaintTest::on_actSave_triggered( bool checked )
 
 }
 
-void InpaintTest::on_actEnlarge_triggered( bool checked )
+void InpaintGui::on_actEnlarge_triggered( bool checked )
 {
 	float	oldScale	= ui.widgetImage->scale();
 	ui.widgetImage->setScale( oldScale * 1.5f );
 }
 
-void InpaintTest::on_actShrink_triggered( bool checked )
+void InpaintGui::on_actShrink_triggered( bool checked )
 {
 	float	oldScale	= ui.widgetImage->scale();
 	ui.widgetImage->setScale( oldScale / 1.5f );
 }
 
-void InpaintTest::on_actOriginal_triggered( bool checked )
+void InpaintGui::on_actOriginal_triggered( bool checked )
 {
 	if ( ui.widgetImage->fitWnd() )
 	{
@@ -79,37 +79,37 @@ void InpaintTest::on_actOriginal_triggered( bool checked )
 	}
 }
 
-void InpaintTest::on_actMove_toggled( bool checked )
+void InpaintGui::on_actMove_toggled( bool checked )
 {
 	if ( checked ) ui.widgetImage->setOperType( CImageDisplay::eOperNormal );
 }
 
-void InpaintTest::on_actSelRect_toggled( bool checked )
+void InpaintGui::on_actSelRect_toggled( bool checked )
 {
 	if ( checked ) ui.widgetImage->setOperType( CImageDisplay::eOperRect );
 }
 
-void InpaintTest::on_actSelPath_toggled( bool checked )
+void InpaintGui::on_actSelPath_toggled( bool checked )
 {
 	if ( checked ) ui.widgetImage->setOperType( CImageDisplay::eOperPath );
 }
 
-void InpaintTest::on_actSelPencil_toggled( bool checked )
+void InpaintGui::on_actSelPencil_toggled( bool checked )
 {
 	if ( checked ) ui.widgetImage->setOperType( CImageDisplay::eOperPen );
 }
 
-void InpaintTest::on_actUndo_triggered( bool checked )
+void InpaintGui::on_actUndo_triggered( bool checked )
 {
 	ui.widgetImage->undo();
 }
 
-void InpaintTest::on_actRedo_triggered( bool checked )
+void InpaintGui::on_actRedo_triggered( bool checked )
 {
 	ui.widgetImage->redo();
 }
 
-void InpaintTest::on_imageDisplay_maskChanged()
+void InpaintGui::on_imageDisplay_maskChanged()
 {
 	int32_t		operCur	= 0;
 	int32_t		operNum	= m_inpaint.regionOperNum( operCur );
@@ -118,9 +118,9 @@ void InpaintTest::on_imageDisplay_maskChanged()
 
 }
 
-void InpaintTest::OnInpaintProgress( int32_t progress, void* cbParam )
+void InpaintGui::OnInpaintProgress( int32_t progress, void* cbParam )
 {
-	InpaintTest*	thisPtr	= (InpaintTest*)cbParam;
+	InpaintGui*	thisPtr	= (InpaintGui*)cbParam;
 	QPaintEvent*	event	= new QPaintEvent( thisPtr->ui.widgetImage->rect() );
 	QCoreApplication::postEvent( thisPtr->ui.widgetImage, event );
 }

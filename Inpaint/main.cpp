@@ -1,4 +1,4 @@
-#include "InpaintTest.h"
+#include "InpaintGui.h"
 #include <QtWidgets/QApplication>
 
 void GetGaussianKernel( double *gaus, int pixel, const double radius, const double sigma )
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 		qDebug() << x << "->" << xd - ( ( ( xd + 1 ) % width  ) * ( xd / width * 2 ) );
 	}
 
-	InpaintTest w;
+	InpaintGui w;
 	w.show();
 	return a.exec();
 }

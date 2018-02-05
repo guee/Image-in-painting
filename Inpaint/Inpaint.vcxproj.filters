@@ -43,18 +43,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InpaintTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_InpaintTest.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_InpaintTest.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\qrc_InpaintTest.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="CImageDir.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -88,17 +76,20 @@
     <ClCompile Include="Inpaint2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_InpaintGui.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_InpaintGui.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="InpaintGui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_InpaintGui.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="InpaintTest.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="InpaintTest.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="InpaintTest.qrc">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="CImageDir.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -111,11 +102,17 @@
     <CustomBuild Include="CImageDisplay.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="InpaintGui.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InpaintGui.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InpaintGui.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GeneratedFiles\ui_InpaintTest.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CImageDir.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -137,5 +134,61 @@
     <ClInclude Include="MaskDrawer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_InpaintGui.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\iconInpaint2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconInpaint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconRedo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconUndo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconPath.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconPathOn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconOpen.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconSave.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconMove.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconMoveOn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconEnlarge.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconShrink.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconZoom.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconPencilOn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconRectOn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconPencil.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\iconRect.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
