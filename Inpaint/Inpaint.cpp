@@ -1,6 +1,7 @@
 #include "Inpaint.h"
 #include <algorithm>
 #include "assert.h" 
+//#include <QtGui>
 
 CInpaint::CInpaint()
 {
@@ -25,7 +26,54 @@ bool CInpaint::inpaint( uint8_t* imgBuf, int32_t pitch, int32_t inpType )
 	//如果有通过水印检测得到的修补区域，就要在修补前检查图像的水印区域是否有水印。
 	if ( m_wmarkChips.size() )
 	{
-
+		for ( int32_t i = 0; i < m_wmarkChips.size(); ++i )
+		{
+			if ( m_wmarkChips[i] >= m_currOper ) continue;
+			SChip*		chip	= m_picChips[m_wmarkChips[i]];
+			int32_t		validPix	= 0;
+			int32_t		allPix		= 0;
+			for ( int32_t y = max( 1, chip->rect.top() ), endY = min( chip->rect.bottom(), m_maskImage.height - 2 ); y <= endY; ++y )
+			{
+				int32_t		staX		=  max( 1, chip->rect.left() );
+				SOrgPixel*	imgPix	= m_imgOrg.pixel( staX, y );
+				SOrgPixel*	imgPixT	= m_imgOrg.pixel( staX, y - 1 );
+				SOrgPixel*	imgPixB	= m_imgOrg.pixel( staX, y + 1 );
+				SDetectPixel*	detPix	= m_watermark.pixel( staX, y );
+				for ( int32_t x = staX, endX = min( chip->rect.right(), m_maskImage.width - 2 ); x <= endX; ++x )
+				{
+					if ( detPix->mark2 )
+					{
+						int32_t		sx	= ( ( imgPixT->b + imgPix->b * 2 + imgPixB->b ) - ( imgPixT->b + imgPix->b * 2 + imgPixB->b ) );
+						int32_t		sy	= ( ( imgPixT->b + imgPixT->b * 2 + imgPixT->b ) - ( imgPixB->b + imgPixB->b * 2 + imgPixB->b ) );
+						uint32_t	sobelB	= uint32_t( sqrt( sx * sx + sy * sy ) );
+						sx	= ( ( imgPixT->g + imgPix->g * 2 + imgPixB->g ) - ( imgPixT->g + imgPix->g * 2 + imgPixB->g ) );
+						sy	= ( ( imgPixT->g + imgPixT->g * 2 + imgPixT->g ) - ( imgPixB->g + imgPixB->g * 2 + imgPixB->g ) );
+						uint32_t	sobelG	= uint32_t( sqrt( sx * sx + sy * sy ) );
+						sx	= ( ( imgPixT->r + imgPix->r * 2 + imgPixB->r ) - ( imgPixT->r + imgPix->r * 2 + imgPixB->r ) );
+						sy	= ( ( imgPixT->r + imgPixT->r * 2 + imgPixT->r ) - ( imgPixB->r + imgPixB->r * 2 + imgPixB->r ) );
+						uint32_t	sobelR	= uint32_t( sqrt( sx * sx + sy * sy ) );
+						if ( sobelB > 150 || sobelG > 150 || sobelR > 150 || ( sobelB + sobelG + sobelR ) > 300 )
+						{
+							++validPix;
+						}
+						++allPix;
+					}
+					++imgPix;
+					++imgPixT;
+					++imgPixB;
+					++detPix;
+				}
+			}
+			//qDebug() << "Ind:" << i << ", all:" << allPix << ", valid:" << validPix << ", " << float( validPix ) / allPix;
+			if ( validPix * 3 < allPix )
+			{
+				undoOper( chip );
+			}
+			else
+			{
+				redoOper( chip );
+			}
+		}
 	}
 	if ( inpType <= 0 )
 	{
@@ -62,12 +110,7 @@ bool CInpaint::inpaint( uint8_t* imgBuf, int32_t pitch, int32_t inpType )
 		}
 
 	}
-	m_changedRect.clear();
-	m_picChips.clear();
-	m_currOper	= 0;
-	m_curPencil	= nullptr;
-	m_unitedChanged	= false;
-
+	m_maskReset	= true;
 	return true;
 }
 

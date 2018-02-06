@@ -1,8 +1,10 @@
 #pragma once
 #include <stdint.h>
 #include <vector>
+#include <map>
 #include <utility>
-using namespace std; 
+#include <algorithm>
+using namespace std;
 #include "GRect.h"
 #include "GSize.h"
 #include "GPoint.h"
@@ -128,12 +130,12 @@ protected:
 	struct SChip
 	{
 		EChipType	eType;
-		int32_t		radius;		//画笔的半径（像素）
+		int32_t		penRadius;		//画笔的半径（像素）
 		GRect		rect;
 		vector<GPoint>	pots;
 		SChip()
 		{
-			radius		= 0;
+			penRadius	= 0;
 			eType		= eRect;
 		}
 	};
@@ -153,6 +155,7 @@ protected:
 	int32_t			m_currOper;		//当前完成的掩模操作索引，撤消操作减1，重做操作加1。
 	vector<GRect>	m_changedRect;
 	SChip*			m_curPencil;
+	bool			m_maskReset;	//mask 已经失效，需要重新初始化。
 
 	bool			m_unitedChanged;
 	GRect			m_inpRect;

@@ -2,7 +2,6 @@
 
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 #define min(a,b) (((a) < (b)) ? (a) : (b))
-#include <QtGui>
 
 CMaskDrawer::CMaskDrawer()
 {
@@ -10,6 +9,7 @@ CMaskDrawer::CMaskDrawer()
 	m_currOper	= 0;
 	m_unitedChanged	= false;
 	m_sobelSum		= 0;
+	m_maskReset		= false;
 }
 
 
@@ -62,7 +62,7 @@ bool CMaskDrawer::resetSize( int32_t width, int32_t height )
 	m_currOper	= 0;
 	m_curPencil	= nullptr;
 	m_unitedChanged	= false;
-
+	m_maskReset	= false;
 	return true;
 }
 
@@ -78,12 +78,18 @@ void CMaskDrawer::resetMask()
 		m_rtUniteds.clear();
 		m_rtAbsolutes.clear();
 	}
+	m_changedRect.clear();
+	m_picChips.clear();
+	m_currOper	= 0;
+	m_curPencil	= nullptr;
+	m_unitedChanged	= false;
+	m_maskReset	= false;
 }
 
 bool CMaskDrawer::fillRect( int32_t x, int32_t y, int32_t width, int32_t height )
 {
 	if ( !m_maskImage.isVaild() ) return false;
-	if ( m_picChips.empty() ) resetMask();
+	if ( m_maskReset ) resetMask();
 	GRect	rtFill( x, y, width, height );
 	rtFill	= m_maskImage.rtImage.intersected( rtFill );
 	if ( rtFill.isEmpty() ) return false;
@@ -109,11 +115,11 @@ bool CMaskDrawer::fillRect( int32_t x, int32_t y, int32_t width, int32_t height 
 bool CMaskDrawer::pencilBegin( int32_t radius )
 {
 	if ( !m_maskImage.isVaild() || radius < 0 ) return false;
-	if ( m_picChips.empty() ) resetMask();
+	if ( m_maskReset ) resetMask();
 	if ( m_curPencil ) pencilEnd();
 	m_curPencil		= new SChip;
 	m_curPencil->eType	= ePencil;
-	m_curPencil->radius	= radius;
+	m_curPencil->penRadius	= radius;
 	return true;
 }
 
@@ -121,7 +127,7 @@ bool CMaskDrawer::pencilPos( int32_t x, int32_t y )
 {
 	if ( nullptr == m_curPencil ) return false;
 
-	GRect	rtPen	= drawLine( m_curPencil->pots.empty() ? GPoint( x, y ) : m_curPencil->pots.back(), GPoint( x, y ), m_curPencil->radius );
+	GRect	rtPen	= drawLine( m_curPencil->pots.empty() ? GPoint( x, y ) : m_curPencil->pots.back(), GPoint( x, y ), m_curPencil->penRadius );
 	m_changedRect.push_back( rtPen );
 	if ( m_curPencil->rect.isValid() )
 		m_curPencil->rect	|= rtPen;
@@ -160,7 +166,7 @@ bool CMaskDrawer::pencilEnd()
 bool CMaskDrawer::pathClosed( const int32_t pots[], int32_t potCount )
 {
 	if ( !m_maskImage.isVaild() ) return false;
-	if ( m_picChips.empty() ) resetMask();
+	if ( m_maskReset ) resetMask();
 	if ( potCount < 3 || nullptr == pots ) return false;
 	if ( m_curPencil ) pencilEnd();
 
@@ -194,6 +200,11 @@ bool CMaskDrawer::pathClosed( const int32_t pots[], int32_t potCount )
 
 int32_t CMaskDrawer::operNum( int32_t & current )
 {
+	if ( m_maskReset )
+	{
+		current	= 0;
+		return 0;
+	}
 	current	= m_currOper;
 	return int32_t( m_picChips.size() );
 }
@@ -205,6 +216,16 @@ bool CMaskDrawer::redo()
 	SChip*	chip	= m_picChips[m_currOper];
 	if ( redoOper( chip ) )
 	{
+		//如果当前进行的操作序号已经存在于 m_wmarkChips 列表中，说明之前撤消了自动侦测水印的操作。
+		//并且，当前的操作也不是重新进行水印侦测引起的，因为侦测水印成功时会先清空 m_wmarkChips 列表。
+		for ( int32_t i = 0; i < m_wmarkChips.size(); ++i )
+		{
+			if ( m_wmarkChips[i] == m_currOper )	//侦测水印的操作序号被其它操作替换了。
+			{
+				m_wmarkChips.erase( m_wmarkChips.begin() + i );
+				break;
+			}
+		}
 		++m_currOper;
 		return true;
 	}
@@ -227,7 +248,7 @@ bool CMaskDrawer::undo()
 
 bool CMaskDrawer::getChangedRect( int32_t & x, int32_t & y, int32_t & width, int32_t & height )
 {
-	if ( m_changedRect.empty() )
+	if ( m_maskReset || m_changedRect.empty() )
 		return false;
 	GRect	rtChanged;
 	for ( auto rt = m_changedRect.begin(); rt != m_changedRect.end(); ++rt )
@@ -852,10 +873,12 @@ bool CMaskDrawer::getUnited()
 		m_rtUniteds.clear();
 		m_rtAbsolutes.clear();
 		m_inpRect	= GRect();
+		if ( m_currOper == 0 ) return true;
 		bool	isAdjoin	= false;
 		vector<bool>	isUniteds;
 		for ( int32_t i = 0; i < m_currOper; ++i )
 		{
+			if ( m_picChips[i]->penRadius < 0 ) continue;
 			m_rtUniteds.push_back( m_picChips[i]->rect );
 			isUniteds.push_back( m_picChips[i]->eType == eRect ? false : true );
 		}
@@ -916,7 +939,8 @@ bool CMaskDrawer::redoOper( SChip* chip )
 	}
 	else if ( chip->eType == ePath )
 	{
-		if ( chip->rect.isNull() ) return false;
+		if ( chip->penRadius > 0 || chip->rect.isNull() ) return false;
+		chip->penRadius	= 1;
 		fillPath( chip->pots );
 		for ( int32_t y = chip->rect.top(); y <= chip->rect.bottom(); ++y )
 		{
@@ -970,7 +994,8 @@ bool CMaskDrawer::undoOper( SChip* chip )
 	}
 	else if ( chip->eType == ePath )
 	{
-		if ( chip->rect.isNull() ) return true;
+		if ( chip->penRadius < 0 || chip->rect.isNull() ) return true;
+		chip->penRadius	= -1;
 		fillPath( chip->pots );
 		for ( int32_t y = chip->rect.top(); y <= chip->rect.bottom(); ++y )
 		{
@@ -991,7 +1016,7 @@ bool CMaskDrawer::undoOper( SChip* chip )
 	{
 		for ( auto pt = chip->pots.begin(); pt < chip->pots.end() - 1; ++pt )
 		{
-			drawLine( *pt, *( pt + 1 ), chip->radius );
+			drawLine( *pt, *( pt + 1 ), chip->penRadius );
 		}
 		for ( int32_t y = chip->rect.top(); y <= chip->rect.bottom(); ++y )
 		{
