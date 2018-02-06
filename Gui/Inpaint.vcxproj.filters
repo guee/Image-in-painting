@@ -111,75 +111,71 @@
     <CustomBuild Include="InpaintGui.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GeneratedFiles\ui_CImageDir.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_CImageDisplay.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_InpaintGui.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inpaint\Inpaint.h">
+    <CustomBuild Include="..\Inpaint\Inpaint.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Inpaint\MaskDrawer.h">
+    </CustomBuild>
+    <CustomBuild Include="..\Inpaint\MaskDrawer.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resources\iconInpaint2.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconEnlarge.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconInpaint.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconInpaint.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconRedo.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconInpaint2.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconUndo.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconMove.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconPath.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconMoveOn.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconPathOn.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconOpen.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconOpen.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconPath.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconSave.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconPathOn.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconMove.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconPencil.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconMoveOn.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconPencilOn.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconEnlarge.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconRect.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconShrink.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconRectOn.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconZoom.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconRedo.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconPencilOn.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconSave.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconRectOn.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconShrink.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconPencil.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconUndo.png">
       <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\iconRect.png">
+    </CustomBuild>
+    <CustomBuild Include="Resources\iconZoom.png">
       <Filter>Resource Files</Filter>
-    </Image>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_CImageDisplay.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_InpaintGui.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_CImageDir.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

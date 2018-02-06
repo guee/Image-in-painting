@@ -1,4 +1,4 @@
-#include "CImageDir.h"
+﻿#include "CImageDir.h"
 
 CImageDir::CImageDir(QWidget *parent)
 	: QWidget(parent)

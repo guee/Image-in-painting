@@ -1,4 +1,4 @@
-#include "Inpaint.h"
+ï»¿#include "Inpaint.h"
 #include <algorithm>
 #include "assert.h" 
 //#include <QtGui>
@@ -23,7 +23,7 @@ bool CInpaint::inpaint( uint8_t* imgBuf, int32_t pitch, int32_t inpType )
 	m_imgOrg.create( (SOrgPixel*)imgBuf, m_maskImage.width, m_maskImage.height, pitch, true );
 	m_imgProc.create( ( uint8_t*)m_maskImage.pixel( 0, 0 ), m_maskImage.width, m_maskImage.height, m_maskImage.pitch, true );
 
-	//Èç¹ûÓĞÍ¨¹ıË®Ó¡¼ì²âµÃµ½µÄĞŞ²¹ÇøÓò£¬¾ÍÒªÔÚĞŞ²¹Ç°¼ì²éÍ¼ÏñµÄË®Ó¡ÇøÓòÊÇ·ñÓĞË®Ó¡¡£
+	//å¦‚æœæœ‰é€šè¿‡æ°´å°æ£€æµ‹å¾—åˆ°çš„ä¿®è¡¥åŒºåŸŸï¼Œå°±è¦åœ¨ä¿®è¡¥å‰æ£€æŸ¥å›¾åƒçš„æ°´å°åŒºåŸŸæ˜¯å¦æœ‰æ°´å°ã€‚
 	if ( m_wmarkChips.size() )
 	{
 		for ( int32_t i = 0; i < m_wmarkChips.size(); ++i )

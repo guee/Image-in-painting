@@ -1,4 +1,4 @@
-#include "InpaintGui.h"
+﻿#include "InpaintGui.h"
 
 InpaintGui::InpaintGui(QWidget *parent)
 	: QMainWindow(parent)

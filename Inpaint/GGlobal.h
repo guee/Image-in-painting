@@ -1,4 +1,4 @@
-#ifndef GGLOBAL_H
+﻿#ifndef GGLOBAL_H
 #define GGLOBAL_H
 #define	G_EXPORT 
 
@@ -10,12 +10,12 @@ typedef float real_t;
 template <typename T>
 inline T gAbs(const T &t) { return t >= 0 ? t : -t; }
 
-inline int gRound( float_t d)
+inline int gRound( float d)
 { return d >= real_t(0.0) ? int(d + real_t(0.5)) : int(d - int(d-1) + real_t(0.5)) + int(d-1); }
-inline int gRound( double_t d )
+inline int gRound( double d )
 { return d >= real_t(0.0) ? int(d + real_t(0.5)) : int(d - int(d-1) + real_t(0.5)) + int(d-1); }
 
-inline int64_t gRound64(double_t d)
+inline int64_t gRound64(double d)
 { return d >= 0.0 ? int64_t(d + 0.5) : int64_t(d - real_t( int64_t(d-1)) + 0.5) + int64_t(d-1); }
 
 
@@ -48,22 +48,22 @@ static inline bool gIsNull(float f)
     return val.u == 0u;
 }
 
-static inline bool gFuzzyCompare(double_t p1, double_t p2)
+static inline bool gFuzzyCompare(double p1, double p2)
 {
     return (gAbs(p1 - p2) <= 0.000000000001 * gMin(gAbs(p1), gAbs(p2)));
 }
 
-static inline bool gFuzzyCompare(float_t p1, float_t p2)
+static inline bool gFuzzyCompare(float p1, float p2)
 {
     return (gAbs(p1 - p2) <= 0.00001f * gMin(gAbs(p1), gAbs(p2)));
 }
 
-static inline bool gFuzzyIsNull( double_t d)
+static inline bool gFuzzyIsNull( double d)
 {
     return gAbs(d) <= 0.000000000001;
 }
 
-static inline bool gFuzzyIsNull( float_t f)
+static inline bool gFuzzyIsNull( float f)
 {
     return gAbs(f) <= 0.00001f;
 }
@@ -81,4 +81,4 @@ enum AspectRatioMode {
     KeepAspectRatioByExpanding
 };
 
-#endif GGLOBAL_H
+#endif //GGLOBAL_H

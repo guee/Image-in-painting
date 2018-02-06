@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+﻿//#include "stdafx.h"
 #include "GSize.h"
 
 void GSize::scale(const GSize &s, AspectRatioMode mode)

@@ -1,4 +1,4 @@
-#include "Inpaint.h"
+ï»¿#include "Inpaint.h"
 #include <algorithm>
 #include "assert.h" 
 
@@ -69,11 +69,11 @@ void CInpaint::structuralRepair( int32_t x, int32_t y )
 			[]( const GPoint& p1, const GPoint& p2 ) {
 			return ( p1.x() < p2.x() ) || ( p1.x() == p2.x() && p1.y() < p2.y() );
 		});
-		outPots.push_back( pots.front() );	//×î×ó±ß£¬ÉÏ·½µÄµã¡£
+		outPots.push_back( pots.front() );	//æœ€å·¦è¾¹ï¼Œä¸Šæ–¹çš„ç‚¹ã€‚
 		int32_t		index	= 0;
 		int32_t		count	= pots.size();
 		while ( index < count - 1 && pots[index].x() == pots[index + 1].x() ) { ++index; }
-		if ( index != 0 ) outPots.push_back( pots[index] );	//×î×ó±ß£¬ÏÂ·½µÄµã¡£
+		if ( index != 0 ) outPots.push_back( pots[index] );	//æœ€å·¦è¾¹ï¼Œä¸‹æ–¹çš„ç‚¹ã€‚
 		while ( index < count - 1 )
 		{
 			double_t	maxDy	= -999999999999999999.0;
@@ -96,7 +96,7 @@ void CInpaint::structuralRepair( int32_t x, int32_t y )
 
 		}
 		while ( index > 0 && pots[index].x() == pots[index - 1].x() ) { --index; }
-		if ( index != count - 1 ) outPots.push_back( pots[index] );	//×îÓÒ±ß£¬ÉÏ·½µÄµã¡£
+		if ( index != count - 1 ) outPots.push_back( pots[index] );	//æœ€å³è¾¹ï¼Œä¸Šæ–¹çš„ç‚¹ã€‚
 
 		while ( index > 0 )
 		{
@@ -357,11 +357,11 @@ void CInpaint::structuralRepair( int32_t x, int32_t y )
 				int32_t		count	= seg->line.size();
 				while ( index < count - 1 )
 				{
-					int32_t		x0 = seg->line[index].x();
-					int32_t		y0 = seg->line[index].y();
+                    int32_t		x0 = seg->line[index].x();
+                    //int32_t		y0 = seg->line[index].y();
 					while ( index < count - 1 && seg->line[index].y() == seg->line[index + 1].y() ) { ++index; }
-					int32_t		x1	= seg->line[index].x();
-					int32_t		y1	= seg->line[index].y();
+                    //int32_t		x1	= seg->line[index].x();
+                    //int32_t		y1	= seg->line[index].y();
 					findEdgePotsX( x0, seg->line[index].x(), seg->line[index].y() );
 					++index;
 				}
@@ -410,12 +410,12 @@ int32_t CInpaint::findBorderPots()
 {
 	vector<GRect> rtUniteds;
 	vector<GRect> rtAbsolutes;
-	//Çå³ıÖ®Ç°µÄĞŞ²¹±ß½çµãÁĞ±í
+	//æ¸…é™¤ä¹‹å‰çš„ä¿®è¡¥è¾¹ç•Œç‚¹åˆ—è¡¨
 	m_borderPots.clear();
 	m_borderPtFirsts.clear();
-	//ºÏ²¢ĞŞ²¹ÇøÓò
+	//åˆå¹¶ä¿®è¡¥åŒºåŸŸ
 	if ( !getUnited() ) return 0;
-	//¶ÀÁ¢µÄ£¬¾ØĞÎµÄĞŞ²¹ÇøÓò¿ÉÒÔÖ»¼ì²é¾ØĞÎ±ß¿òÉÏµÄÏñËØÊÇ·ñÊÇĞŞ²¹±ß½ç¡£
+	//ç‹¬ç«‹çš„ï¼ŒçŸ©å½¢çš„ä¿®è¡¥åŒºåŸŸå¯ä»¥åªæ£€æŸ¥çŸ©å½¢è¾¹æ¡†ä¸Šçš„åƒç´ æ˜¯å¦æ˜¯ä¿®è¡¥è¾¹ç•Œã€‚
 	for ( auto rt = m_rtAbsolutes.begin(); rt != m_rtAbsolutes.end(); ++rt )
 	{
 		bool	borderFinded	= false;
@@ -424,7 +424,7 @@ int32_t CInpaint::findBorderPots()
 			uint8_t*	pixPrc	= m_imgProc.pixel( rt->left(), y );
 			for ( int32_t x = rt->left(); x <= rt->right(); ++x )
 			{
-				*pixPrc++	= PIXEL_MISSING;		//°ÑÏñËØ±ê¼ÇÎªÈ±Ê§µÄ¡£
+				*pixPrc++	= PIXEL_MISSING;		//æŠŠåƒç´ æ ‡è®°ä¸ºç¼ºå¤±çš„ã€‚
 			}
 		}
 		for ( int32_t y = rt->top(); y <= rt->bottom(); ++y )
@@ -451,7 +451,7 @@ int32_t CInpaint::findBorderPots()
 			checkFirstBorder( x, rt->bottom() );
 		}
 	}
-	//ÆäËüĞÎ×´µÄÇøÓò£¬ÒÔ¼°¶à¸öÇøÓòºÏ²¢³ÉµÄ´óµÄÇøÓò£¬ĞèÒªÉ¨ÃèÃ¿¸öÏñËØµã¼ì²éËüÊÇ·ñÊÇĞŞ²¹±ß½ç¡£
+	//å…¶å®ƒå½¢çŠ¶çš„åŒºåŸŸï¼Œä»¥åŠå¤šä¸ªåŒºåŸŸåˆå¹¶æˆçš„å¤§çš„åŒºåŸŸï¼Œéœ€è¦æ‰«ææ¯ä¸ªåƒç´ ç‚¹æ£€æŸ¥å®ƒæ˜¯å¦æ˜¯ä¿®è¡¥è¾¹ç•Œã€‚
 	vector<pair<GPoint,GPoint>>	lines;
 	for ( auto rt = m_rtUniteds.begin(); rt != m_rtUniteds.end(); ++rt )
 	{
@@ -480,7 +480,7 @@ int32_t CInpaint::findBorderPots()
 						uint8_t*	prcRev	= pixPrc - stepLen;
 						for ( int32_t d = 0; d < stepLen; ++d )
 						{
-							*prcRev		= PIXEL_MISSING;		//°ÑÏñËØ±ê¼ÇÎªÈ±Ê§µÄ¡£
+							*prcRev		= PIXEL_MISSING;		//æŠŠåƒç´ æ ‡è®°ä¸ºç¼ºå¤±çš„ã€‚
 							++prcRev;
 						}
 						lines.push_back( pair<GPoint, GPoint>( GPoint( ptStart, y ), GPoint( x - 1, y ) ) );

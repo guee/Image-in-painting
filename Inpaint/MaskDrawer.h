@@ -1,9 +1,10 @@
-#pragma once
+ï»¿#pragma once
 #include <stdint.h>
 #include <vector>
 #include <map>
 #include <utility>
 #include <algorithm>
+#include <string.h>
 using namespace std;
 #include "GRect.h"
 #include "GSize.h"
@@ -86,7 +87,7 @@ protected:
 				}
 				else
 				{
-					memset( imgBuf, 0, pitch * _height );
+                    memset( imgBuf, 0, pitch * _height );
 				}
 			}
 			width = _width;
@@ -130,7 +131,7 @@ protected:
 	struct SChip
 	{
 		EChipType	eType;
-		int32_t		penRadius;		//»­±ÊµÄ°ë¾¶£¨ÏñËØ£©
+		int32_t		penRadius;		//ç”»ç¬”çš„åŠå¾„ï¼ˆåƒç´ ï¼‰
 		GRect		rect;
 		vector<GPoint>	pots;
 		SChip()
@@ -151,11 +152,11 @@ protected:
 
 	CImage<SMaskPixel>	m_maskImage_exp;
 	CImage<SMaskPixel>	m_maskImage;
-	vector<SChip*>	m_picChips;		//ÑÚÄ£²Ù×÷£¨¾ØĞÎÇøÓò¡¢»­±Ê¡¢±ÕºÏÂ·¾¶£©ÁĞ±í¡£
-	int32_t			m_currOper;		//µ±Ç°Íê³ÉµÄÑÚÄ£²Ù×÷Ë÷Òı£¬³·Ïû²Ù×÷¼õ1£¬ÖØ×ö²Ù×÷¼Ó1¡£
+	vector<SChip*>	m_picChips;		//æ©æ¨¡æ“ä½œï¼ˆçŸ©å½¢åŒºåŸŸã€ç”»ç¬”ã€é—­åˆè·¯å¾„ï¼‰åˆ—è¡¨ã€‚
+	int32_t			m_currOper;		//å½“å‰å®Œæˆçš„æ©æ¨¡æ“ä½œç´¢å¼•ï¼Œæ’¤æ¶ˆæ“ä½œå‡1ï¼Œé‡åšæ“ä½œåŠ 1ã€‚
 	vector<GRect>	m_changedRect;
 	SChip*			m_curPencil;
-	bool			m_maskReset;	//mask ÒÑ¾­Ê§Ğ§£¬ĞèÒªÖØĞÂ³õÊ¼»¯¡£
+	bool			m_maskReset;	//mask å·²ç»å¤±æ•ˆï¼Œéœ€è¦é‡æ–°åˆå§‹åŒ–ã€‚
 
 	bool			m_unitedChanged;
 	GRect			m_inpRect;
@@ -164,18 +165,18 @@ protected:
 
 	struct SDetectPixel
 	{
-		uint8_t		sobel1 : 1;		//£¨µ±Ç°Í¼Ïñ£©ÏñËØÊÇ·ñÊÇ sobel Ëã×Ó¼ì²â³öÀ´±ßÔµ¡£1£ºÊÇ£¬0£º²»ÊÇ¡£
-		uint8_t		sobel2 : 1;		//£¨×îºóµÄÍ¼Ïñ£©ÏñËØÊÇ·ñÊÇ sobel Ëã×Ó¼ì²â³öÀ´±ßÔµ¡£1£ºÊÇ£¬0£º²»ÊÇ¡£
-		uint8_t		mark : 1;		//¿ÉÄÜÊÇË®Ó¡µÄÏñËØ¡£
-		uint8_t		mark2 : 1;		//È·¶¨ÊÇË®Ó¡µÄÏñËØ¡£
-		uint8_t		weight;			//±ßÔµÏñËØ±»¼ì²â³öÀ´µÄ´ÎÊı£¬Èç¹ûÔÚ¶àÕÅÍ¼Æ¬ÏàÍ¬Î»ÖÃÏñËØ¶¼ÊÇ±ßÔµ£¬ÄÇÃ´¸ÃÏñËØ¿ÉÄÜ¾ÍÊÇË®Ó¡Í¼ÏñµÄ±ßÔµ¡£
-		uint16_t	integral;		//»ı·ÖÍ¼£¬ÓÃÓÚ¿ìËÙÍ³¼ÆÒ»¸öÇøÓòÄÚµÄÓĞĞ§µÄ±ßÔµÏñËØÊıÁ¿¡£
+		uint8_t		sobel1 : 1;		//ï¼ˆå½“å‰å›¾åƒï¼‰åƒç´ æ˜¯å¦æ˜¯ sobel ç®—å­æ£€æµ‹å‡ºæ¥è¾¹ç¼˜ã€‚1ï¼šæ˜¯ï¼Œ0ï¼šä¸æ˜¯ã€‚
+		uint8_t		sobel2 : 1;		//ï¼ˆæœ€åçš„å›¾åƒï¼‰åƒç´ æ˜¯å¦æ˜¯ sobel ç®—å­æ£€æµ‹å‡ºæ¥è¾¹ç¼˜ã€‚1ï¼šæ˜¯ï¼Œ0ï¼šä¸æ˜¯ã€‚
+		uint8_t		mark : 1;		//å¯èƒ½æ˜¯æ°´å°çš„åƒç´ ã€‚
+		uint8_t		mark2 : 1;		//ç¡®å®šæ˜¯æ°´å°çš„åƒç´ ã€‚
+		uint8_t		weight;			//è¾¹ç¼˜åƒç´ è¢«æ£€æµ‹å‡ºæ¥çš„æ¬¡æ•°ï¼Œå¦‚æœåœ¨å¤šå¼ å›¾ç‰‡ç›¸åŒä½ç½®åƒç´ éƒ½æ˜¯è¾¹ç¼˜ï¼Œé‚£ä¹ˆè¯¥åƒç´ å¯èƒ½å°±æ˜¯æ°´å°å›¾åƒçš„è¾¹ç¼˜ã€‚
+		uint16_t	integral;		//ç§¯åˆ†å›¾ï¼Œç”¨äºå¿«é€Ÿç»Ÿè®¡ä¸€ä¸ªåŒºåŸŸå†…çš„æœ‰æ•ˆçš„è¾¹ç¼˜åƒç´ æ•°é‡ã€‚
 
 	};
-	CImage<SDetectPixel>	m_watermark;	//Õì²âË®Ó¡£¬¼ÇÂ¼Ã¿¸öÏñËØµÄ×´Ì¬£¬ÊÇ·ñÊÇË®Ó¡¡£
-	uint32_t				m_sobelSum;		//×îºóÒ»Ö¡Í¼ÏñÔÚÊ¹ÓÃ sobel Ëã×Ó¼ÆËã±ßÔµºó£¬ÓĞĞ§µÄ±ßÔµÏñËØÊıÁ¿¡£
-	uint32_t				m_maxWeight;	//Õì²âË®Ó¡£¬¸÷¸öÏñËØ×î´óµÄÈ¨ÖØ¡£
-	vector<int32_t>			m_wmarkChips;	//Õì²âË®Ó¡ºóµÃµ½Ë®Ó¡ÇøÓò£¬ÒÔ±ÕºÏÂ·¾¶·½Ê½Ìí¼Óµ½ÑÚÄ£²Ù×÷ÁĞ±íÊ±µÄË÷Òı¡£
+	CImage<SDetectPixel>	m_watermark;	//ä¾¦æµ‹æ°´å°ï¼Œè®°å½•æ¯ä¸ªåƒç´ çš„çŠ¶æ€ï¼Œæ˜¯å¦æ˜¯æ°´å°ã€‚
+	uint32_t				m_sobelSum;		//æœ€åä¸€å¸§å›¾åƒåœ¨ä½¿ç”¨ sobel ç®—å­è®¡ç®—è¾¹ç¼˜åï¼Œæœ‰æ•ˆçš„è¾¹ç¼˜åƒç´ æ•°é‡ã€‚
+	uint32_t				m_maxWeight;	//ä¾¦æµ‹æ°´å°ï¼Œå„ä¸ªåƒç´ æœ€å¤§çš„æƒé‡ã€‚
+	vector<int32_t>			m_wmarkChips;	//ä¾¦æµ‹æ°´å°åå¾—åˆ°æ°´å°åŒºåŸŸï¼Œä»¥é—­åˆè·¯å¾„æ–¹å¼æ·»åŠ åˆ°æ©æ¨¡æ“ä½œåˆ—è¡¨æ—¶çš„ç´¢å¼•ã€‚
 	GRect drawLine( const GPoint& poStart, const GPoint& poEnd, float radius );
 	void fillPath( const vector<GPoint>& pots );
 	bool getUnited();

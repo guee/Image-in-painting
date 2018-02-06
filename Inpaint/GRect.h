@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GGlobal.h"
 #include "GPoint.h"
 #include "GSize.h"

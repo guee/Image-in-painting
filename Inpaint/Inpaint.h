@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <stdint.h>
 #include <map>
 #include <vector>
@@ -11,78 +11,78 @@ class CInpaint : private CMaskDrawer
 public:
 	CInpaint();
 	~CInpaint();
-	//��ʼ��Ҫ�޲���ͼ�����ģ��
-	//width		: ͼ��Ŀ�
-	//height	: ͼ��ĸ�
+	//初始化要修补的图像的掩模。
+	//width		: 图像的宽
+	//height	: 图像的高
 	bool regionReset( int32_t width, int32_t height ) { return resetSize( width, height ); }
 
-	//�����ͿĨ�ķ�ʽ����Ҫ�޲�������
-	//��ʼ���ƣ����û��ʵİ뾶�����ʵ���״��Բ�Ρ�
-	//radius	: �뾶��Բ��ʵ��ֱ���� radius * 2 + 1����˵��뾶����Ϊ 0��
-	//ͨ������갴�¼�ʱ������ regionPencilBegin��
+	//以鼠标涂抹的方式设置要修补的区域。
+	//开始绘制，设置画笔的半径，画笔的形状是圆形。
+	//radius	: 半径，圆的实际直径是 radius * 2 + 1，因此当半径可以为 0。
+	//通常在鼠标按下键时，调用 regionPencilBegin。
 	bool regionPencilBegin( int32_t radius ) { return pencilBegin( radius ); }
-	//��������ƶ������ꡣ
-	//x,y		: ���ꡣ
-	//�������һ������ʱ����������λ�û���ָ���뾶��ʵ��Բ��
-	//�����������ʱ����ָ���뾶��ʵ��Բ������ƶ��Ĺ켣���ɳ��ߡ�
-	//ͨ��������ƶ�ʱ������ regionPencilPos��
+	//输入鼠标移动的坐标。
+	//x,y		: 坐标。
+	//当输入第一个坐标时，会在坐标位置绘制指定半径的实心圆。
+	//输入后续坐标时，以指定半径的实心圆把鼠标移动的轨迹连成成线。
+	//通常在鼠标移动时，调用 regionPencilPos。
 	bool regionPencilPos( int32_t x, int32_t y ) { return pencilPos( x, y ); }
-	//������ǰ�Ļ��ơ�
-	//ͨ��������ɿ�����ʱ������ regionPencilEnd��
+	//结束当前的绘制。
+	//通常在鼠标松开按键时，调用 regionPencilEnd。
 	bool regionPencilEnd() { return pencilEnd(); }
 
-	//����Ҫ�޲��ľ������򣬿��Զ�ε������ö������
-	//x,y		: ��������Ͻ����꣨ͼ������Ͻ�����Ϊ(0,0)��
-	//width, height	: ����Ŀ��Ⱥ͸߶ȡ�
+	//设置要修补的矩形区域，可以多次调用设置多个区域。
+	//x,y		: 区域的左上角坐标（图像的左上角坐标为(0,0)）
+	//width, height	: 区域的宽度和高度。
 	bool regionRect( int32_t x, int32_t y, int32_t width, int32_t height ) { return fillRect( x, y, width, height ); }
 
-	//���߶����ӳɵıպ϶��������ΪҪ�޲�������
-	//pots		: �����ÿ���ǵ����꣬������ÿ���� int32_t �ֱ�Ϊ x, y��
-	//				ÿ�� x,y ����ǰһ���������ӳ��ߣ�������ɱպϵĶ���Ρ�
-	//potCount	: �������������Ϊÿ������(x,y)��Ҫ���� int32_t������ potCount �� pots ���鳤�ȵ�һ�롣
+	//把线段连接成的闭合多边形设置为要修补的区域。
+	//pots		: 多边形每个角的坐标，数组中每两个 int32_t 分别为 x, y。
+	//				每组 x,y 与它前一组坐标连接成线，最终组成闭合的多边形。
+	//potCount	: 坐标的数量。因为每组坐标(x,y)需要两个 int32_t，所以 potCount 是 pots 数组长度的一半。
 	bool regionPath( const int32_t pots[], int32_t potCount ) { return pathClosed( pots, potCount ); }
 
-	//ˮӡ��⡣�����������ͬλ������ˮӡ����ͬ�ֱ��ʵ�ͼ���Զ����ˮӡ������
-	//imgBuf	: ͼ������ݣ�ֻ����32λ���ظ�ʽ��
-	//pitch		: ͼ��ÿ�е��ֽ�����ͼ��Ŀ����� regionReset ���õ�һ�¡�
-	//�������� false ��ʾ��û�гɹ���⵽ˮӡ����Ҫ������������ͼ��
-	//�������� true ��ʾ�Ѿ��ɹ���⵽ˮӡ������ʹ�� getRegionImage ��ȡ��ģͼ��鿴��⵽��ˮӡ����
-	//				��⵽ˮӡ�󣬻��Զ�ʹ�� regionPath ������ǳ�ˮӡ����
-	//�����ͼ��Խ�࣬��⵽��ˮӡ����Խ׼ȷ����ʹ�����Ѿ������� true����Ȼ���Լ�������ͼ��
-	//ͨ����������ÿ��ͼƬ�����нϴ��������ô 5 �� 10 �žͿ���׼ȷ�ؼ�⵽ˮӡ���������Ҫ�����ͼƬ��
-	//��������Ƶ�е�ˮӡ����Ϊ�ٽ���֡����С�������ÿ�������Ļ�������һ֡���Լ��ټ�������
-	//�����Ƶ�����̣ܶ����� 10 �룬��ôҲ���Լ����֡����һ�Ρ�
+	//水印侦测。输入多张在相同位置上有水印的相同分辨率的图像，自动检测水印的区域。
+	//imgBuf	: 图像的数据，只能是32位像素格式。
+	//pitch		: 图像每行的字节数。图像的宽高与 regionReset 设置的一致。
+	//函数返回 false 表示还没有成功检测到水印，需要继续输入其它图像。
+	//函数返回 true 表示已经成功检测到水印。可以使用 getRegionImage 得取掩模图像查看检测到的水印区域。
+	//				检测到水印后，会自动使用 regionPath 函数标记出水印区域。
+	//输入的图像越多，检测到的水印区域越准确，即使函数已经返回了 true，仍然可以继续输入图像。
+	//通常如果输入的每张图片画面有较大的区别，那么 5 到 10 张就可以准确地检测到水印，否则就需要更多的图片。
+	//如果检测视频中的水印，因为临近的帧差别很小，最好是每间隔几秒的画面输入一帧，以减少计算量。
+	//如果视频本身很短，例如 10 秒，那么也可以间隔几帧输入一次。
 	bool regionDetection( uint8_t* imgBuf, int32_t pitch ) {
 		return CMaskDrawer::watermarkDetection( imgBuf, pitch ); }
 
-	//ȡ�������޲�����Ĳ��������������Ѿ������Ĳ�������
-	//current	: ���ص�ǰ������������
-	//��Ϊ���Գ������������������� current ����С�ں����ķ���ֵ����ʾ������һЩ������
+	//取得设置修补区域的操作数量（包含已经撤消的操作）。
+	//current	: 返回当前操作的索引。
+	//因为可以撤消、重做操作，所以 current 可能小于函数的返回值，表示撤消了一些操作。
 	int32_t	regionOperNum( int32_t& current ) { return operNum( current ); }
 
-	//����һ��������
-	//ÿ�γ���������ʹ�� regionOperNum ����ȡ�� current ֵ���֮ǰ��1��ֱ��Ϊ0��
+	//撤消一步操作。
+	//每次撤消操作后，使用 regionOperNum 函数取得 current 值会比之前少1，直到为0。
 	bool regionUndo() { return undo(); }
-	//�����������Ĳ�����
-	//ÿ������������ʹ�� regionOperNum ����ȡ�� current ֵ���֮ǰ��1��ֱ���� regionOperNum �ķ���ֵ��ȡ�
+	//重做被撤消的操作。
+	//每次重做操作后，使用 regionOperNum 函数取得 current 值会比之前加1，直到与 regionOperNum 的返回值相等。
 	bool regionRedo() { return redo(); }
 	
-	//ÿ�ν����������޲�����Ĳ���(��������������)�󣬿���ȡ����ģ�ܵ�Ӱ��ľ�������
-	//������ж�β�����ŵ��ñ�����ȡ����ģ�ܵ�Ӱ��ľ���������õ������ۻ��ϲ��ľ�������
+	//每次进行了设置修补区域的操作(包含撤消和重做)后，可以取得掩模受到影响的矩形区域。
+	//如果进行多次操作后才调用本函数取得掩模受到影响的矩形区域，则得到的是累积合并的矩形区域。
 	bool getRegionChangedRect( int32_t& x, int32_t& y, int32_t& width, int32_t& height ) { return getChangedRect( x, y, width, height ); }
-	//ȡ����ģ��ͼ��
-	//��õ���һ�� 8bit ��λͼ����ÿ���ֽڱ�ʾһ�����ء�
-	//pitch		: ��ģͼ��ÿ�е��ֽ�����ͼ��Ŀ����� regionReset ���õ���ͬ��
-	//���ص�ͼ�������У�����ֽ�ֵ��Ϊ0����ʾ��ǰλ�õ������Ѿ�������Ϊ���޲���
+	//取得掩模的图像。
+	//获得的是一个 8bit 的位图，即每个字节表示一个像素。
+	//pitch		: 掩模图像每行的字节数。图像的宽高与 regionReset 设置的相同。
+	//返回的图像数据中，如果字节值不为0，表示当前位置的像素已经被设置为待修补。
 	const uint8_t* getRegionImage( int32_t& pitch ) { return getMaskImage( pitch ); }
 
-	//��ʼ�޲�ͼ��ֻ����32λ���ظ�ʽ��
-	//imgBuf	: ͼ�������
-	//pitch		: ͼ��ÿ�е��ֽ�����ͼ��Ŀ����� regionReset ���õ�һ�¡�
-	//inpType	: �޲��ķ�ʽ�� 0 �� 1 �� 2
-	//���Ҫ�Զ���ͼƬ�����޲�����ÿ��ͼƬ��ˮӡλ�ú�ͼ��ֱ�����ͬʱ������Ҫ�ظ����ô��޲�����
-	//����Ҫ�޲���ͼƬ��ˮӡλ�û�ֱ������ϴβ�ͬʱ��������� regionReset��Ȼ���������ô��޲�����
-	//�޲���ͼ��֮�󣬶��޲�������ģ(mask)�Ĳ����Ͳ��ܳ����ˣ�����ٴ������޲�������ʹ�������õ��޲�����
+	//开始修补图像。只能是32位像素格式。
+	//imgBuf	: 图像的数据
+	//pitch		: 图像每行的字节数。图像的宽高与 regionReset 设置的一致。
+	//inpType	: 修补的方式。 0 或 1 或 2
+	//如果要对多张图片进行修补，当每张图片的水印位置和图像分辨率相同时，不需要重复设置待修补区域。
+	//当需要修补的图片中水印位置或分辨率与上次不同时，必须调用 regionReset，然后重新设置待修补区域。
+	//修补了图像之后，对修补区域掩模(mask)的操作就不能撤消了，如果再次设置修补区域，则使用新设置的修补区域。
 	bool inpaint( uint8_t* imgBuf, int32_t pitch, int32_t inpType );
 private:
 
@@ -113,16 +113,16 @@ private:
 #define	PIXEL_MISSING	0x40
 #define	PIXEL_BORDER	0x20
 #define	PIXEL_PATCHED	0x10
-#define	IS_STATIC_PIXEL( pix )	( ( (pix) & ( PIXEL_INVALID | PIXEL_MISSING ) ) == 0 )	//ͼ����һֱ���ڵ�
-#define	IS_PATCHED_PIXEL( pix )	( (pix) & ( PIXEL_PATCHED ) )	//�Ѿ��޸�
-#define	IS_UNREPAIR_PIXEL( pix )	( ( (pix) & ( PIXEL_MISSING | PIXEL_PATCHED ) ) == PIXEL_MISSING )	//δ�޸�
-#define	IS_MISSING_PIXEL( pix )	( (pix) & ( PIXEL_MISSING ) )	//���޸�
+#define	IS_STATIC_PIXEL( pix )	( ( (pix) & ( PIXEL_INVALID | PIXEL_MISSING ) ) == 0 )	//图像上一直存在的
+#define	IS_PATCHED_PIXEL( pix )	( (pix) & ( PIXEL_PATCHED ) )	//已经修复
+#define	IS_UNREPAIR_PIXEL( pix )	( ( (pix) & ( PIXEL_MISSING | PIXEL_PATCHED ) ) == PIXEL_MISSING )	//未修复
+#define	IS_MISSING_PIXEL( pix )	( (pix) & ( PIXEL_MISSING ) )	//待修复
 
 
 #define	PIXEL_BOREDR_RADIUS_MASK		0x0F
-#define	IS_SEARCH_PIXEL( pix )	( ( (pix) & ( PIXEL_INVALID | PIXEL_MISSING | PIXEL_BOREDR_RADIUS_MASK ) ) == 0 )	//ͼ����һֱ���ڵ�
+#define	IS_SEARCH_PIXEL( pix )	( ( (pix) & ( PIXEL_INVALID | PIXEL_MISSING | PIXEL_BOREDR_RADIUS_MASK ) ) == 0 )	//图像上一直存在的
 #define	IS_VALID_PIXEL( pix )	( IS_STATIC_PIXEL( pix ) || ( (pix) & ( PIXEL_BOREDR_RADIUS_MASK ) ) )
-#define	IS_BORDER_PIXEL( pix )	( (pix) & ( PIXEL_BORDER ) )	//�޸�����߽�
+#define	IS_BORDER_PIXEL( pix )	( (pix) & ( PIXEL_BORDER ) )	//修复区域边界
 
 #pragma pack(pop)
 	CImage<SOrgPixel>	m_imgOrg;

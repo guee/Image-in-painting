@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GGlobal.h"
 
 class G_EXPORT GPoint
@@ -21,8 +21,8 @@ public:
     GPoint &operator+=(const GPoint &p);
     GPoint &operator-=(const GPoint &p);
 
-    GPoint &operator*=(float_t c);
-    GPoint &operator*=(double_t c);
+    GPoint &operator*=(float c);
+    GPoint &operator*=(double c);
     GPoint &operator*=(int32_t c);
 
     GPoint &operator/=(real_t c);
@@ -31,10 +31,10 @@ public:
     friend inline bool operator!=(const GPoint &, const GPoint &);
     friend inline const GPoint operator+(const GPoint &, const GPoint &);
     friend inline const GPoint operator-(const GPoint &, const GPoint &);
-    friend inline const GPoint operator*(const GPoint &, float_t);
-    friend inline const GPoint operator*(float_t, const GPoint &);
-    friend inline const GPoint operator*(const GPoint &, double_t);
-    friend inline const GPoint operator*(double_t, const GPoint &);
+    friend inline const GPoint operator*(const GPoint &, float);
+    friend inline const GPoint operator*(float, const GPoint &);
+    friend inline const GPoint operator*(const GPoint &, double);
+    friend inline const GPoint operator*(double, const GPoint &);
     friend inline const GPoint operator*(const GPoint &, int32_t);
     friend inline const GPoint operator*(int32_t, const GPoint &);
     friend inline const GPoint operator-(const GPoint &);
@@ -81,10 +81,10 @@ inline GPoint &GPoint::operator+=(const GPoint &p)
 inline GPoint &GPoint::operator-=(const GPoint &p)
 { xp-=p.xp; yp-=p.yp; return *this; }
 
-inline GPoint &GPoint::operator*=(float_t c)
+inline GPoint &GPoint::operator*=(float c)
 { xp = gRound(xp*c); yp = gRound(yp*c); return *this; }
 
-inline GPoint &GPoint::operator*=(double_t c)
+inline GPoint &GPoint::operator*=(double c)
 { xp = gRound(xp*c); yp = gRound(yp*c); return *this; }
 
 inline GPoint &GPoint::operator*=(int32_t c)
@@ -102,19 +102,19 @@ inline const GPoint operator+(const GPoint &p1, const GPoint &p2)
 inline const GPoint operator-(const GPoint &p1, const GPoint &p2)
 { return GPoint(p1.xp-p2.xp, p1.yp-p2.yp); }
 
-inline const GPoint operator*(const GPoint &p, float_t c)
+inline const GPoint operator*(const GPoint &p, float c)
 { return GPoint(gRound(p.xp*c), gRound(p.yp*c)); }
 
-inline const GPoint operator*(const GPoint &p, double_t c)
+inline const GPoint operator*(const GPoint &p, double c)
 { return GPoint(gRound(p.xp*c), gRound(p.yp*c)); }
 
 inline const GPoint operator*(const GPoint &p, int32_t c)
 { return GPoint(p.xp*c, p.yp*c); }
 
-inline const GPoint operator*(float_t c, const GPoint &p)
+inline const GPoint operator*(float c, const GPoint &p)
 { return GPoint(gRound(p.xp*c), gRound(p.yp*c)); }
 
-inline const GPoint operator*(double_t c, const GPoint &p)
+inline const GPoint operator*(double c, const GPoint &p)
 { return GPoint(gRound(p.xp*c), gRound(p.yp*c)); }
 
 inline const GPoint operator*(int32_t c, const GPoint &p)

@@ -1,4 +1,4 @@
-#include "MaskDrawer.h"
+ï»¿#include "MaskDrawer.h"
 
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 #define min(a,b) (((a) < (b)) ? (a) : (b))
@@ -216,11 +216,11 @@ bool CMaskDrawer::redo()
 	SChip*	chip	= m_picChips[m_currOper];
 	if ( redoOper( chip ) )
 	{
-		//Èç¹ûµ±Ç°½øĞĞµÄ²Ù×÷ĞòºÅÒÑ¾­´æÔÚÓÚ m_wmarkChips ÁĞ±íÖĞ£¬ËµÃ÷Ö®Ç°³·ÏûÁË×Ô¶¯Õì²âË®Ó¡µÄ²Ù×÷¡£
-		//²¢ÇÒ£¬µ±Ç°µÄ²Ù×÷Ò²²»ÊÇÖØĞÂ½øĞĞË®Ó¡Õì²âÒıÆğµÄ£¬ÒòÎªÕì²âË®Ó¡³É¹¦Ê±»áÏÈÇå¿Õ m_wmarkChips ÁĞ±í¡£
+		//å¦‚æœå½“å‰è¿›è¡Œçš„æ“ä½œåºå·å·²ç»å­˜åœ¨äº m_wmarkChips åˆ—è¡¨ä¸­ï¼Œè¯´æ˜ä¹‹å‰æ’¤æ¶ˆäº†è‡ªåŠ¨ä¾¦æµ‹æ°´å°çš„æ“ä½œã€‚
+		//å¹¶ä¸”ï¼Œå½“å‰çš„æ“ä½œä¹Ÿä¸æ˜¯é‡æ–°è¿›è¡Œæ°´å°ä¾¦æµ‹å¼•èµ·çš„ï¼Œå› ä¸ºä¾¦æµ‹æ°´å°æˆåŠŸæ—¶ä¼šå…ˆæ¸…ç©º m_wmarkChips åˆ—è¡¨ã€‚
 		for ( int32_t i = 0; i < m_wmarkChips.size(); ++i )
 		{
-			if ( m_wmarkChips[i] == m_currOper )	//Õì²âË®Ó¡µÄ²Ù×÷ĞòºÅ±»ÆäËü²Ù×÷Ìæ»»ÁË¡£
+			if ( m_wmarkChips[i] == m_currOper )	//ä¾¦æµ‹æ°´å°çš„æ“ä½œåºå·è¢«å…¶å®ƒæ“ä½œæ›¿æ¢äº†ã€‚
 			{
 				m_wmarkChips.erase( m_wmarkChips.begin() + i );
 				break;
@@ -448,7 +448,7 @@ bool CMaskDrawer::watermarkDetection( uint8_t * imgBuf, int32_t pitch )
 		SDetectPixel*	detPix	= m_watermark.pixel( 1, y );
 		for ( int32_t x = 1; x < m_watermark.width - 1; ++x )
 		{
-			//²»¶ÔÍ¼Ïñ½øĞĞ»Ò¶È»¯´¦Àí£¬¶øÖ±½Ó·Ö±ğ¶Ô RGB Ê¹ÓÃ sobel Ëã×Ó¼ÆËãÌİ¶È£¬¿ÉÒÔµÃµ½¸ü×¼È·µÄ±ßÔµĞÅÏ¢¡£
+			//ä¸å¯¹å›¾åƒè¿›è¡Œç°åº¦åŒ–å¤„ç†ï¼Œè€Œç›´æ¥åˆ†åˆ«å¯¹ RGB ä½¿ç”¨ sobel ç®—å­è®¡ç®—æ¢¯åº¦ï¼Œå¯ä»¥å¾—åˆ°æ›´å‡†ç¡®çš„è¾¹ç¼˜ä¿¡æ¯ã€‚
 			int32_t		sx	= ( ( imgPixT[4] + imgPix[4] * 2 + imgPixB[4] ) - ( imgPixT[-4] + imgPix[-4] * 2 + imgPixB[-4] ) );
 			int32_t		sy	= ( ( imgPixT[-4] + imgPixT[0] * 2 + imgPixT[4] ) - ( imgPixB[-4] + imgPixB[0] * 2 + imgPixB[4] ) );
 			uint32_t	sobelB	= uint32_t( sqrt( sx * sx + sy * sy ) );
@@ -458,8 +458,8 @@ bool CMaskDrawer::watermarkDetection( uint8_t * imgBuf, int32_t pitch )
 			sx	= ( ( imgPixT[6] + imgPix[6] * 2 + imgPixB[6] ) - ( imgPixT[-2] + imgPix[-2] * 2 + imgPixB[-2] ) );
 			sy	= ( ( imgPixT[-2] + imgPixT[2] * 2 + imgPixT[6] ) - ( imgPixB[-2] + imgPixB[2] * 2 + imgPixB[6] ) );
 			uint32_t	sobelR	= uint32_t( sqrt( sx * sx + sy * sy ) );
-			//Ö±½ÓÊ¹ÓÃ·§ÖµÀ´ÅĞ¶ÏÊÇ·ñÊÇÓĞĞ§µÄ±ßÔµÏñËØ£¬¶ø²»Ê¹ÓÃ·Ç¼«´óÖµÒÖÖÆµÈ·½·¨µÃµ½µ¥ÏñËØ¿íµÄ±ßÔµÏß¡£
-			//ÒòÎªÔÚ²»Í¬µÄ»­ÃæÉÏ£¬Ë®Ó¡Í¼ÏñµÄµ¥ÏñËØ¿í±ßÔµµÄ¿ÉÄÜ²»ÄÜÖØµş£¬µ«Ê¹ÓÃ·§ÖµµÃµ½µÄ½Ï¿íµÄ±ßÔµÏß£¬¾ÍÒ»°ãÄÜ¹»ÖØµş¡£
+			//ç›´æ¥ä½¿ç”¨é˜€å€¼æ¥åˆ¤æ–­æ˜¯å¦æ˜¯æœ‰æ•ˆçš„è¾¹ç¼˜åƒç´ ï¼Œè€Œä¸ä½¿ç”¨éæå¤§å€¼æŠ‘åˆ¶ç­‰æ–¹æ³•å¾—åˆ°å•åƒç´ å®½çš„è¾¹ç¼˜çº¿ã€‚
+			//å› ä¸ºåœ¨ä¸åŒçš„ç”»é¢ä¸Šï¼Œæ°´å°å›¾åƒçš„å•åƒç´ å®½è¾¹ç¼˜çš„å¯èƒ½ä¸èƒ½é‡å ï¼Œä½†ä½¿ç”¨é˜€å€¼å¾—åˆ°çš„è¾ƒå®½çš„è¾¹ç¼˜çº¿ï¼Œå°±ä¸€èˆ¬èƒ½å¤Ÿé‡å ã€‚
 			if ( sobelB > 150 || sobelG > 150 || sobelR > 150 || ( sobelB + sobelG + sobelR ) > 300 )
 			{
 				detPix->sobel1	= 1;
@@ -615,7 +615,7 @@ bool CMaskDrawer::watermarkDetection( uint8_t * imgBuf, int32_t pitch )
 			}
 			delete[]hisSplitH;
 			delete[]hisSplitW;
-			//É¾³ıÖ®Ç°µÄË®Ó¡¼ì²â½á¹û¡£
+			//åˆ é™¤ä¹‹å‰çš„æ°´å°æ£€æµ‹ç»“æœã€‚
 			while( m_wmarkChips.size() )
 			{
 				if ( m_wmarkChips.back() < m_currOper )
@@ -626,7 +626,7 @@ bool CMaskDrawer::watermarkDetection( uint8_t * imgBuf, int32_t pitch )
 				}
 				m_wmarkChips.pop_back();
 			}
-			//ÖØĞÂÌí¼ÓË®Ó¡¼ì²â½á¹û¡£
+			//é‡æ–°æ·»åŠ æ°´å°æ£€æµ‹ç»“æœã€‚
 			while ( watermarks.size() )
 			{
 				vector<GPoint>	edgePots;
@@ -698,11 +698,11 @@ bool CMaskDrawer::convexClosure( vector<GPoint>& pots )
 		[]( const GPoint& p1, const GPoint& p2 ) {
 		return ( p1.x() < p2.x() ) || ( p1.x() == p2.x() && p1.y() < p2.y() );
 	} );
-	outPots.push_back( pots.front() );	//×î×ó±ß£¬ÉÏ·½µÄµã¡£
+	outPots.push_back( pots.front() );	//æœ€å·¦è¾¹ï¼Œä¸Šæ–¹çš„ç‚¹ã€‚
 	int32_t		index	= 0;
 	int32_t		count	= pots.size();
 	while ( index < count - 1 && pots[index].x() == pots[index + 1].x() ) { ++index; }
-	if ( index != 0 ) outPots.push_back( pots[index] );	//×î×ó±ß£¬ÏÂ·½µÄµã¡£
+	if ( index != 0 ) outPots.push_back( pots[index] );	//æœ€å·¦è¾¹ï¼Œä¸‹æ–¹çš„ç‚¹ã€‚
 	while ( index < count - 1 )
 	{
 		double_t	maxDy	= -999999999999999999.0;
@@ -725,7 +725,7 @@ bool CMaskDrawer::convexClosure( vector<GPoint>& pots )
 
 	}
 	while ( index > 0 && pots[index].x() == pots[index - 1].x() ) { --index; }
-	if ( index != count - 1 ) outPots.push_back( pots[index] );	//×îÓÒ±ß£¬ÉÏ·½µÄµã¡£
+	if ( index != count - 1 ) outPots.push_back( pots[index] );	//æœ€å³è¾¹ï¼Œä¸Šæ–¹çš„ç‚¹ã€‚
 
 	while ( index > 0 )
 	{

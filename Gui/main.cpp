@@ -1,4 +1,4 @@
-#include "InpaintGui.h"
+﻿#include "InpaintGui.h"
 #include <QtWidgets/QApplication>
 
 void GetGaussianKernel( double *gaus, int pixel, const double radius, const double sigma )

@@ -7,21 +7,21 @@
 message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./Inpaint/Inpaint.h \
-    ./Inpaint/MaskDrawer.h \
-    ./Gui/InpaintGui.h \
-    ./Gui/CImageDisplay.h \
-    ./Gui/CImageDir.h
-SOURCES += ./Inpaint/GRect.cpp \
-    ./Inpaint/GSize.cpp \
-    ./Inpaint/Inpaint.cpp \
-    ./Inpaint/Inpaint2.cpp \
-    ./Inpaint/MaskDrawer.cpp \
-    ./Gui/CImageDir.cpp \
-    ./Gui/CImageDisplay.cpp \
-    ./Gui/InpaintGui.cpp \
-    ./Gui/main.cpp
-FORMS += ./Gui/CImageDir.ui \
-    ./Gui/CImageDisplay.ui \
-    ./Gui/InpaintGui.ui
+HEADERS += ../Inpaint/Inpaint.h \
+    ../Inpaint/MaskDrawer.h \
+    ./InpaintGui.h \
+    ./CImageDisplay.h \
+    ./CImageDir.h
+SOURCES += ../Inpaint/GRect.cpp \
+    ../Inpaint/GSize.cpp \
+    ../Inpaint/Inpaint.cpp \
+    ../Inpaint/Inpaint2.cpp \
+    ../Inpaint/MaskDrawer.cpp \
+    ./CImageDir.cpp \
+    ./CImageDisplay.cpp \
+    ./InpaintGui.cpp \
+    ./main.cpp
+FORMS += ./CImageDir.ui \
+    ./CImageDisplay.ui \
+    ./InpaintGui.ui
 RESOURCES += InpaintGui.qrc

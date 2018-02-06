@@ -1,4 +1,4 @@
-#include "CImageDisplay.h"
+﻿#include "CImageDisplay.h"
 #pragma comment ( lib, "winmm.lib")
 
 CImageDisplay::CImageDisplay(QWidget *parent)
