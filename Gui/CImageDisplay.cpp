@@ -564,7 +564,7 @@ void CImageDisplay::redo()
 	}
 }
 
-void CImageDisplay::startInpaint( bool isBest )
+void CImageDisplay::startInpaint( int32_t inpType )
 {
 	m_operPots.clear();
 	m_operPotInd	= -1;
@@ -582,7 +582,7 @@ void CImageDisplay::startInpaint( bool isBest )
 	tick	= timeGetTime() - tick;
 	qDebug() << "inpaint width:" << rtInp.width() << ", height:" << rtInp.height() << ".  fps:" << float(num) * 1000 / tick << ", avg ms:" << float(tick) / num;
 #else
-	m_inpaint->inpaint( m_pImage->bits(), m_pImage->bytesPerLine(), isBest );
+	m_inpaint->inpaint( m_pImage->bits(), m_pImage->bytesPerLine(), inpType );
 #endif // 1
 
 	m_pMask->fill( QColor( 255, 0, 0, 0 ) );

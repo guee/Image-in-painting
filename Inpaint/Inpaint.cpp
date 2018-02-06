@@ -1,4 +1,5 @@
 #include "Inpaint.h"
+#include <algorithm>
 #include "assert.h" 
 
 CInpaint::CInpaint()
@@ -14,7 +15,7 @@ CInpaint::~CInpaint()
 	if ( m_edgePots ) free( m_edgePots );
 }
 
-bool CInpaint::inpaint( uint8_t* imgBuf, int32_t pitch, bool isBest )
+bool CInpaint::inpaint( uint8_t* imgBuf, int32_t pitch, int32_t inpType )
 {
 	if ( nullptr == imgBuf || pitch <= 0 ) return false;
 	if ( m_picChips.empty() && !m_inpRect.isValid() ) return false;
@@ -26,9 +27,25 @@ bool CInpaint::inpaint( uint8_t* imgBuf, int32_t pitch, bool isBest )
 	{
 
 	}
-	if ( isBest )
+	if ( inpType <= 0 )
+	{
+		if ( 0 == findEdgePots() ) return false;
+		fastInpaint();
+
+	}
+	else if ( inpType == 1 )
 	{
 		if ( 0 == findBorderPots() ) return false;
+		fastInpaint2();
+	}
+	else
+	{
+		if ( 0 == findBorderPots() ) return false;
+		expendBorder();
+		for ( auto pt = m_borderPtFirsts.begin(); pt != m_borderPtFirsts.end(); ++pt )
+		{
+			structuralRepair( pt->x(), pt->y() );
+		}
 		drawbackBorder();
 
 		for ( int32_t y = m_inpRect.top(); y <= m_inpRect.bottom(); ++y )
@@ -43,11 +60,6 @@ bool CInpaint::inpaint( uint8_t* imgBuf, int32_t pitch, bool isBest )
 				++prcPix;
 			}
 		}
-	}
-	else
-	{
-		if ( 0 == findEdgePots() ) return false;
-		fastInpaint();
 
 	}
 	m_changedRect.clear();
@@ -451,6 +463,83 @@ void CInpaint::fastInpaint()
 		}
 	}
 #endif
+}
+
+void CInpaint::fastInpaint2()
+{
+	sort( m_borderPots.begin(), m_borderPots.end(),
+		[]( const SBorderPoint& p1, const SBorderPoint& p2 ) {
+		return p1.sum > p2.sum; } );
+
+	int32_t		edgePtMax	= m_borderPots.size() * 2 + BLOCK_RADIUS * 8;
+	int32_t		edgePtCount	= 0;
+	int32_t		edgePtIndex	= 0;
+	GPoint*		edgePots	= (GPoint*)malloc( edgePtMax * sizeof( GPoint ) );
+
+	for ( auto pt = m_borderPots.begin(); pt != m_borderPots.end(); ++pt )
+	{
+		int32_t		r = 0, g = 0, b = 0, a = 0, c = 0;
+		for ( int32_t j = 0; j < 8; ++j )
+		{
+			GPoint		pt2	= *pt + poOctree8[j];
+			uint8_t*	prcRev	= m_imgProc.pixel( pt2.x(), pt2.y() );
+			if ( IS_MISSING_PIXEL( *prcRev ) && ( *prcRev & PIXEL_BOREDR_RADIUS_MASK ) == 0 )
+			{
+				edgePots[edgePtCount++].setPos( pt2.x(), pt2.y() );
+				*prcRev	|= 1;
+			}
+			else if ( IS_STATIC_PIXEL( *prcRev ) || IS_PATCHED_PIXEL( *prcRev ) )
+			{
+				SOrgPixel*	pixImg	= m_imgOrg.pixel( pt2.x(), pt2.y() );
+				b	+= pixImg->b;
+				g	+= pixImg->g;
+				r	+= pixImg->r;
+				a	+= pixImg->a;
+				++c;
+			}
+		}
+		*m_imgProc.pixel( pt->x(), pt->y() )	|= PIXEL_PATCHED;
+		SOrgPixel*	pixImg	= m_imgOrg.pixel( pt->x(), pt->y() );
+		pixImg->b	= b / c;
+		pixImg->g	= g / c;
+		pixImg->r	= r / c;
+		pixImg->a	= a / c;
+	}
+
+	while ( edgePtIndex < edgePtCount )
+	{
+		GPoint		pt	= edgePots[( edgePtIndex++ ) % edgePtMax];
+		uint8_t*	prcRev	= m_imgProc.pixel( pt.x(), pt.y() );
+
+		int32_t		r = 0, g = 0, b = 0, a = 0, c = 0;
+		for ( int32_t i = 0; i < 8; ++i )
+		{
+			GPoint		pt2	= pt + poOctree8[i];
+			uint8_t*	prcRev	= m_imgProc.pixel( pt2.x(), pt2.y() );
+			if ( IS_MISSING_PIXEL( *prcRev ) && ( *prcRev & PIXEL_BOREDR_RADIUS_MASK ) == 0 )
+			{
+				edgePots[( edgePtCount++ ) % edgePtMax].setPos( pt2.x(), pt2.y() );
+				assert( ( edgePtCount % edgePtMax ) != ( edgePtIndex % edgePtMax ) );
+				*prcRev	|= 1;
+			}
+			else if ( IS_STATIC_PIXEL( *prcRev ) || IS_PATCHED_PIXEL( *prcRev ) )
+			{
+				SOrgPixel*	pixImg	= m_imgOrg.pixel( pt2.x(), pt2.y() );
+				b	+= pixImg->b;
+				g	+= pixImg->g;
+				r	+= pixImg->r;
+				a	+= pixImg->a;
+				++c;
+			}
+		}
+		*m_imgProc.pixel( pt.x(), pt.y() )	|= PIXEL_PATCHED;
+		SOrgPixel*	pixImg	= m_imgOrg.pixel( pt.x(), pt.y() );
+		pixImg->b	= b / c;
+		pixImg->g	= g / c;
+		pixImg->r	= r / c;
+		pixImg->a	= a / c;
+	}
+	free( edgePots );
 }
 
 inline int32_t CInpaint::checkFirstEdge( int32_t x, int32_t y )

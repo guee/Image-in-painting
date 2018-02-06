@@ -66,7 +66,8 @@
    <addaction name="actUndo"/>
    <addaction name="actRedo"/>
    <addaction name="separator"/>
-   <addaction name="actInpaint"/>
+   <addaction name="actInpaint0"/>
+   <addaction name="actInpaint1"/>
    <addaction name="actInpaint2"/>
    <addaction name="separator"/>
    <addaction name="actEnlarge"/>
@@ -74,10 +75,10 @@
    <addaction name="actOriginal"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actInpaint">
+  <action name="actInpaint0">
    <property name="icon">
     <iconset resource="InpaintGui.qrc">
-     <normaloff>:/InpaintTest/Resources/iconInpaint.png</normaloff>:/InpaintTest/Resources/iconInpaint.png</iconset>
+     <normaloff>:/InpaintTest/Resources/iconInpaint0.png</normaloff>:/InpaintTest/Resources/iconInpaint0.png</iconset>
    </property>
    <property name="text">
     <string>修补</string>
@@ -207,7 +208,16 @@
      <normaloff>:/InpaintTest/Resources/iconInpaint2.png</normaloff>:/InpaintTest/Resources/iconInpaint2.png</iconset>
    </property>
    <property name="text">
-    <string>修补</string>
+    <string>修补2</string>
+   </property>
+  </action>
+  <action name="actInpaint1">
+   <property name="icon">
+    <iconset resource="InpaintGui.qrc">
+     <normaloff>:/InpaintTest/Resources/iconInpaint1.png</normaloff>:/InpaintTest/Resources/iconInpaint1.png</iconset>
+   </property>
+   <property name="text">
+    <string>修补1</string>
    </property>
   </action>
  </widget>

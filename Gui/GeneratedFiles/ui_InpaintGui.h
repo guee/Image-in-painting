@@ -27,7 +27,7 @@ QT_BEGIN_NAMESPACE
 class Ui_InpaintTestClass
 {
 public:
-    QAction *actInpaint;
+    QAction *actInpaint0;
     QAction *actSelRect;
     QAction *actSelPencil;
     QAction *actEnlarge;
@@ -40,6 +40,7 @@ public:
     QAction *actUndo;
     QAction *actRedo;
     QAction *actInpaint2;
+    QAction *actInpaint1;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
     CImageDir *widgetDir;
@@ -52,11 +53,11 @@ public:
         if (InpaintTestClass->objectName().isEmpty())
             InpaintTestClass->setObjectName(QStringLiteral("InpaintTestClass"));
         InpaintTestClass->resize(1233, 706);
-        actInpaint = new QAction(InpaintTestClass);
-        actInpaint->setObjectName(QStringLiteral("actInpaint"));
+        actInpaint0 = new QAction(InpaintTestClass);
+        actInpaint0->setObjectName(QStringLiteral("actInpaint0"));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/InpaintTest/Resources/iconInpaint.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actInpaint->setIcon(icon);
+        icon.addFile(QStringLiteral(":/InpaintTest/Resources/iconInpaint0.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actInpaint0->setIcon(icon);
         actSelRect = new QAction(InpaintTestClass);
         actSelRect->setObjectName(QStringLiteral("actSelRect"));
         actSelRect->setCheckable(true);
@@ -126,6 +127,11 @@ public:
         QIcon icon12;
         icon12.addFile(QStringLiteral(":/InpaintTest/Resources/iconInpaint2.png"), QSize(), QIcon::Normal, QIcon::Off);
         actInpaint2->setIcon(icon12);
+        actInpaint1 = new QAction(InpaintTestClass);
+        actInpaint1->setObjectName(QStringLiteral("actInpaint1"));
+        QIcon icon13;
+        icon13.addFile(QStringLiteral(":/InpaintTest/Resources/iconInpaint1.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actInpaint1->setIcon(icon13);
         centralWidget = new QWidget(InpaintTestClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
@@ -173,7 +179,8 @@ public:
         mainToolBar->addAction(actUndo);
         mainToolBar->addAction(actRedo);
         mainToolBar->addSeparator();
-        mainToolBar->addAction(actInpaint);
+        mainToolBar->addAction(actInpaint0);
+        mainToolBar->addAction(actInpaint1);
         mainToolBar->addAction(actInpaint2);
         mainToolBar->addSeparator();
         mainToolBar->addAction(actEnlarge);
@@ -188,7 +195,7 @@ public:
     void retranslateUi(QMainWindow *InpaintTestClass)
     {
         InpaintTestClass->setWindowTitle(QApplication::translate("InpaintTestClass", "InpaintTest", Q_NULLPTR));
-        actInpaint->setText(QApplication::translate("InpaintTestClass", "\344\277\256\350\241\245", Q_NULLPTR));
+        actInpaint0->setText(QApplication::translate("InpaintTestClass", "\344\277\256\350\241\245", Q_NULLPTR));
         actSelRect->setText(QApplication::translate("InpaintTestClass", "\347\237\251\345\275\242", Q_NULLPTR));
         actSelPencil->setText(QApplication::translate("InpaintTestClass", "\347\224\273\347\254\224", Q_NULLPTR));
         actEnlarge->setText(QApplication::translate("InpaintTestClass", "\346\224\276\345\244\247", Q_NULLPTR));
@@ -200,7 +207,8 @@ public:
         actSelPath->setText(QApplication::translate("InpaintTestClass", "\350\267\257\345\276\204", Q_NULLPTR));
         actUndo->setText(QApplication::translate("InpaintTestClass", "\346\222\244\346\266\210", Q_NULLPTR));
         actRedo->setText(QApplication::translate("InpaintTestClass", "\351\207\215\345\201\232", Q_NULLPTR));
-        actInpaint2->setText(QApplication::translate("InpaintTestClass", "\344\277\256\350\241\245", Q_NULLPTR));
+        actInpaint2->setText(QApplication::translate("InpaintTestClass", "\344\277\256\350\241\2452", Q_NULLPTR));
+        actInpaint1->setText(QApplication::translate("InpaintTestClass", "\344\277\256\350\241\2451", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -33,7 +33,7 @@ public:
 	QImage*		image() { return m_pImage; }
 	void undo();
 	void redo();
-	void startInpaint( bool isBest );
+	void startInpaint( int32_t inpType );
 private:
 	Ui::CImageDisplay ui;
 	CInpaint*	m_inpaint;

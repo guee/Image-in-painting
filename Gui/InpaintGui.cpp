@@ -25,14 +25,19 @@ void InpaintGui::on_dirChanged( CImageDir* pImgDir, const QString& szDir )
 {
 }
 
-void InpaintGui::on_actInpaint_triggered( bool checked )
+void InpaintGui::on_actInpaint0_triggered( bool checked )
 {
-	ui.widgetImage->startInpaint( false );
+	ui.widgetImage->startInpaint( 0 );
+}
+
+void InpaintGui::on_actInpaint1_triggered( bool checked )
+{
+	ui.widgetImage->startInpaint( 1 );
 }
 
 void InpaintGui::on_actInpaint2_triggered( bool checked )
 {
-	ui.widgetImage->startInpaint( true );
+	ui.widgetImage->startInpaint( 2 );
 }
 
 void InpaintGui::on_actOpen_triggered( bool checked )

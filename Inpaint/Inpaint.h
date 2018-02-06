@@ -79,11 +79,11 @@ public:
 	//开始修补图像。只能是32位像素格式。
 	//imgBuf	: 图像的数据
 	//pitch		: 图像每行的字节数。图像的宽高与 regionReset 设置的一致。
-	//isBest	: 修补的方式。
+	//inpType	: 修补的方式。 0 或 1 或 2
 	//如果要对多张图片进行修补，当每张图片的水印位置和图像分辨率相同时，不需要重复设置待修补区域。
 	//当需要修补的图片中水印位置或分辨率与上次不同时，必须调用 regionReset，然后重新设置待修补区域。
 	//修补了图像之后，对修补区域掩模(mask)的操作就不能撤消了，如果再次设置修补区域，则使用新设置的修补区域。
-	bool inpaint( uint8_t* imgBuf, int32_t pitch, bool isBest = true );
+	bool inpaint( uint8_t* imgBuf, int32_t pitch, int32_t inpType );
 private:
 
 #define	PIXEL_DIFF_MIN		16
@@ -168,11 +168,13 @@ private:
 	SEdgePoint*		m_edgePots;
 	int32_t			m_edgeAlloc;
 	int32_t			m_edgeCount;
+	vector<GPoint>	m_borderPtFirsts;
 	vector<SBorderPoint>	m_borderPots;
 
 	int32_t findEdgePots();
 	int32_t findBorderPots();
 	void	fastInpaint();
+	void	fastInpaint2();
 	void	expendBorder();
 	void	drawbackBorder();
 	//SOrgPixel getAvgColor( int32_t x, int32_t y, int32_t radius );
@@ -180,7 +182,7 @@ private:
 	inline int32_t checkFirstEdge2( int32_t x, int32_t y );
 	inline bool checkFirstBorder( int32_t x, int32_t y, int32_t radius = PIXEL_BOREDR_RADIUS_MASK );
 		
-	inline	void structuralRepair( int32_t x, int32_t y );
+	void structuralRepair( int32_t x, int32_t y );
 
 	const	GPoint	poOctree8[8]	= { { 0, -1 }, { 1, -1 }, { 1, 0 }, { 1, 1 }, { 0, 1 }, { -1, 1 }, { -1, 0 }, { -1, -1 } };
 };

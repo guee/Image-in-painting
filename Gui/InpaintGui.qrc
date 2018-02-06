@@ -1,8 +1,9 @@
 <RCC>
   <qresource prefix="InpaintTest">
     <file>Resources/iconInpaint2.png</file>
-    <file>Resources/iconInpaint.png</file>
     <file>Resources/iconRedo.png</file>
+    <file>Resources/iconInpaint0.png</file>
+    <file>Resources/iconInpaint1.png</file>
     <file>Resources/iconUndo.png</file>
     <file>Resources/iconPath.png</file>
     <file>Resources/iconPathOn.png</file>

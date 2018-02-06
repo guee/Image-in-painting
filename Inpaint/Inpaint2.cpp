@@ -49,7 +49,7 @@ inline int32_t CInpaint::checkFirstEdge2( int32_t x, int32_t y )
 	return -1;
 }
 
-inline void CInpaint::structuralRepair( int32_t x, int32_t y )
+void CInpaint::structuralRepair( int32_t x, int32_t y )
 {
 	struct Segment
 	{
@@ -410,9 +410,12 @@ int32_t CInpaint::findBorderPots()
 {
 	vector<GRect> rtUniteds;
 	vector<GRect> rtAbsolutes;
-	vector<GPoint> ptFirsts;
+	//清除之前的修补边界点列表
 	m_borderPots.clear();
+	m_borderPtFirsts.clear();
+	//合并修补区域
 	if ( !getUnited() ) return 0;
+	//独立的，矩形的修补区域可以只检查矩形边框上的像素是否是修补边界。
 	for ( auto rt = m_rtAbsolutes.begin(); rt != m_rtAbsolutes.end(); ++rt )
 	{
 		bool	borderFinded	= false;
@@ -421,7 +424,7 @@ int32_t CInpaint::findBorderPots()
 			uint8_t*	pixPrc	= m_imgProc.pixel( rt->left(), y );
 			for ( int32_t x = rt->left(); x <= rt->right(); ++x )
 			{
-				*pixPrc++	= PIXEL_MISSING;
+				*pixPrc++	= PIXEL_MISSING;		//把像素标记为缺失的。
 			}
 		}
 		for ( int32_t y = rt->top(); y <= rt->bottom(); ++y )
@@ -436,7 +439,7 @@ int32_t CInpaint::findBorderPots()
 					if ( *prcRev == 0 )
 					{
 						borderFinded	= true;
-						ptFirsts.push_back( GPoint( rt->left() + poOctree8[i].x(), y + poOctree8[i].y() ) );
+						m_borderPtFirsts.push_back( GPoint( rt->left() + poOctree8[i].x(), y + poOctree8[i].y() ) );
 						break;
 					}
 				}
@@ -448,6 +451,7 @@ int32_t CInpaint::findBorderPots()
 			checkFirstBorder( x, rt->bottom() );
 		}
 	}
+	//其它形状的区域，以及多个区域合并成的大的区域，需要扫描每个像素点检查它是否是修补边界。
 	vector<pair<GPoint,GPoint>>	lines;
 	for ( auto rt = m_rtUniteds.begin(); rt != m_rtUniteds.end(); ++rt )
 	{
@@ -476,7 +480,7 @@ int32_t CInpaint::findBorderPots()
 						uint8_t*	prcRev	= pixPrc - stepLen;
 						for ( int32_t d = 0; d < stepLen; ++d )
 						{
-							*prcRev		= PIXEL_MISSING;
+							*prcRev		= PIXEL_MISSING;		//把像素标记为缺失的。
 							++prcRev;
 						}
 						lines.push_back( pair<GPoint, GPoint>( GPoint( ptStart, y ), GPoint( x - 1, y ) ) );
@@ -488,7 +492,7 @@ int32_t CInpaint::findBorderPots()
 								if ( *prcRev == 0 )
 								{
 									borderFinded	= true;
-									ptFirsts.push_back( GPoint( ptStart + poOctree8[i].x(), y + poOctree8[i].y() ) );
+									m_borderPtFirsts.push_back( GPoint( ptStart + poOctree8[i].x(), y + poOctree8[i].y() ) );
 									break;
 								}
 							}
@@ -516,11 +520,7 @@ int32_t CInpaint::findBorderPots()
 			}
 		}
 	}
-	expendBorder();
-	for ( auto pt = ptFirsts.begin(); pt != ptFirsts.end(); ++pt )
-	{
-		structuralRepair( pt->x(), pt->y() );
-	}
+
 	return m_borderPots.size();
 }
 

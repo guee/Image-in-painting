@@ -25,7 +25,8 @@ private slots:
 	void on_actEnlarge_triggered( bool checked = false );
 	void on_actShrink_triggered( bool checked = false );
 	void on_actOriginal_triggered( bool checked = false );
-	void on_actInpaint_triggered( bool checked = false );
+	void on_actInpaint0_triggered( bool checked = false );
+	void on_actInpaint1_triggered( bool checked = false );
 	void on_actInpaint2_triggered( bool checked = false );
 	void on_actMove_toggled( bool checked = false );
 	void on_actSelRect_toggled( bool checked = false );
