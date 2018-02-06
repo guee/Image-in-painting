@@ -4,7 +4,7 @@
 #include <QtGui>
 #include "ui_InpaintGui.h"
 #include "CImageDir.h"
-#include "Inpaint.h"
+#include "../Inpaint/Inpaint.h"
 
 
 class InpaintGui : public QMainWindow

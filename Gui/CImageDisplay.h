@@ -3,7 +3,7 @@
 #include <QWidget>
 #include <QtGui>
 #include "ui_CImageDisplay.h"
-#include "Inpaint.h"
+#include "../Inpaint/Inpaint.h"
 
 class CImageDisplay : public QWidget
 {

@@ -7,7 +7,7 @@
 #include <QFileDialog>
 #include <QPainter>
 #include "ui_CImageDir.h"
-#include "Inpaint.h"
+#include "../Inpaint/Inpaint.h"
 
 class CDirThread;
 class CImageDir : public QWidget

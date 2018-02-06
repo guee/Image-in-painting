@@ -61,21 +61,6 @@
     <ClCompile Include="CImageDisplay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GRect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Inpaint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MaskDrawer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GSize.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Inpaint2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_InpaintGui.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -87,6 +72,21 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\qrc_InpaintGui.cpp">
       <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Inpaint\GRect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Inpaint\GSize.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Inpaint\Inpaint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Inpaint\Inpaint2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Inpaint\MaskDrawer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,23 +119,14 @@
     <ClInclude Include="GeneratedFiles\ui_CImageDisplay.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="GPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GRect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GSize.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Inpaint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MaskDrawer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_InpaintGui.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inpaint\Inpaint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inpaint\MaskDrawer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
